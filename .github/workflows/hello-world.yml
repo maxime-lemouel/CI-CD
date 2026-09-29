@@ -35,7 +35,7 @@ jobs:
         name: application
         path: dist/
 
-    - run: echo "test ok"
+    - run: npm run test
 
     - name: status
       if: always()
