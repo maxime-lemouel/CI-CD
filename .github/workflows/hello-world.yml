@@ -4,19 +4,39 @@ on:
   push:
 
 jobs:
-  hello:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - run: npm run build
+      - uses: actions/upload-artifact@v7
         with:
-          node-version: 24.18.0
-      - uses: actions/cache@v5
-        with:
-          path: ~/.npm
-          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-      - run: npm ci
+          name: application
+          path: dist/
 
-      - name: status
-        if: always()
-        run: echo "Status ${{ job.status }}"
+  test:
+    needs: build
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        node: [ 20, 22 ]
+        os: [ ubuntu-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+
+    - uses: actions/checkout@v7
+    - uses: actions/setup-node@v7
+      with:
+        node-version: ${{ matrix.node }}
+
+    - uses: actions/download-artifact@v7
+      with:
+        name: application
+        path: dist/
+
+    - run: echo "test ok"
+
+    - name: status
+      if: always()
+      run: echo "Status ${{ job.status }}"
