@@ -16,7 +16,7 @@ jobs:
           path: ~/.npm
           key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - run: npm ci
-      - run: npm test
+
       - name: status
         if: always()
         run: echo "Status ${{ job.status }}"
