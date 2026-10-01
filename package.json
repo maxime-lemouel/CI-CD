@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"test ok \"",
-    "build": "cat dist/index.html"
+    "build": "mkdir -p dist && echo '<h1>Hello GitHub Actions</h1>' > dist/index.html"
   },
   "repository": {
     "type": "git",
