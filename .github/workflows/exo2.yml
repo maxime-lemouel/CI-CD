@@ -22,7 +22,6 @@ jobs:
           name: build
           path: dist/
       - run: |
-          echo "## Build" >> "$GITHUB_STEP_SUMMARY"
           echo "Commit : \${{ github.sha }}`" >> "$GITHUB_STEP_SUMMARY"
           echo "Branche : ${{ github.ref_name }}" >> "$GITHUB_STEP_SUMMARY"
           echo "Date : $(date -u)" >> "$GITHUB_STEP_SUMMARY"
